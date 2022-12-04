@@ -65,11 +65,27 @@ body {
 }
 
 .search-form > input {
-  border-radius: 15px;
-  width: 200px;
+  border: none;
+  /* border-radius: 15px; */
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 220px;
   height: 40px;
   font-size: 24px;
 }
+
+.search-form > button {
+  /* border-radius: 15px; */
+  border: none;
+  cursor: pointer;
+  background-color: #b5b5b5;
+  border-bottom-right-radius: 15px;
+  border-top-right-radius: 15px;
+  font-size: 24px;
+}
+
 
 .info {
   display: flex;

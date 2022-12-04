@@ -39,7 +39,7 @@ function loadMore(entries, observer) {
 }
 
 function fetchImag(what, pageGallery) {
-  const URL = 'https://pixabay.com/api';
+  const URL = 'http://pixabay.com/api';
   return axios.get(URL, {
     params: {
       q: what,

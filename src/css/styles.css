@@ -49,6 +49,10 @@ body {
   box-shadow:  18px 18px 39px #b5b5b5, -18px -18px 39px #ffffff;
 }
 
+.photo-card > img {
+  border-radius: 18px;
+}
+
 .search-form {
   padding: 30px;
   display: flex;

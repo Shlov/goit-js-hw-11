@@ -39,6 +39,7 @@ body {
 .gallery {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-evenly;
   padding: 16px;
 }
 
@@ -58,6 +59,16 @@ body {
   display: flex;
   justify-content: center;
   background-color: tomato;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #c36069, #ff828f);
+  box-shadow:  18px 18px 39px #b5b5b5, -18px -18px 39px #ffffff;
+}
+
+.search-form > input {
+  border-radius: 15px;
+  width: 200px;
+  height: 40px;
+  font-size: 24px;
 }
 
 .info {

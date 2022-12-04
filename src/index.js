@@ -1,6 +1,7 @@
 import './css/styles.css';
-import axios from 'axios';
+
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import {fetchImag} from './js/fetchSearch'
 
 const searchEl = document.querySelector('#search-form');
 const galleryEl = document.querySelector('.gallery');
@@ -25,7 +26,7 @@ function searchImg(event) {
   what = event.target.searchQuery.value;
   galleryEl.innerHTML = '';
   page = 1;
-  fetchImag(what, page);
+  fetchImag(what, page ,resultsPerPage).then(r => addMarkup(r));
 }
 
 function loadMore(entries, observer) {
@@ -33,25 +34,25 @@ function loadMore(entries, observer) {
     console.log(entry.isIntersecting)
     if (entry.isIntersecting) {
       page +=1;
-      fetchImag(what, page);
+      fetchImag(what, page, resultsPerPage).then(r => addMarkup(r));
     }
   });
 }
 
-function fetchImag(what, pageGallery) {
-  const URL = 'https://pixabay.com/api';
-  return axios.get(URL, {
-    params: {
-      q: what,
-      key: '31737650-012dbd0b1d73fc9a5bf6ca0f4',
-      type: 'photo',
-      orientation: 'horizontal',
-      safesearch: 'true',
-      per_page: resultsPerPage,
-      page: pageGallery,
-    }
-  }).then(r => addMarkup(r));
-}
+// function fetchImag(what, pageGallery) {
+//   const URL = 'https://pixabay.com/api';
+//   return axios.get(URL, {
+//     params: {
+//       q: what,
+//       key: '31737650-012dbd0b1d73fc9a5bf6ca0f4',
+//       type: 'photo',
+//       orientation: 'horizontal',
+//       safesearch: 'true',
+//       per_page: resultsPerPage,
+//       page: pageGallery,
+//     }
+//   }).then(r => addMarkup(r));
+// }
 
 function addMarkup(data) {
   console.log(data)

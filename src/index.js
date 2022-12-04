@@ -9,7 +9,7 @@ const guardEl = document.querySelector('.guard');
 
 const optionScroll = {
   root: null,
-  rootMargin: '200px',
+  rootMargin: '400px',
   threshold: 1.0,
 }
 
@@ -19,14 +19,14 @@ searchEl.addEventListener('submit', searchImg);
 
 let page = 1;
 let what = '';
-const  resultsPerPage = 16;
+const  resultsPerPage = 40;
 
 function searchImg(event) {
   event.preventDefault();
   what = event.target.searchQuery.value;
   galleryEl.innerHTML = '';
   page = 1;
-  fetchImag(what, page ,resultsPerPage).then(r => addMarkup(r));
+  fetchImag(what, page ,resultsPerPage).then(r => addMarkup(r)).catch(error => Notify.failure(error.message));
 }
 
 function loadMore(entries, observer) {
@@ -34,7 +34,7 @@ function loadMore(entries, observer) {
     console.log(entry.isIntersecting)
     if (entry.isIntersecting) {
       page +=1;
-      fetchImag(what, page, resultsPerPage).then(r => addMarkup(r));
+      fetchImag(what, page, resultsPerPage).then(r => addMarkup(r)).catch(error => Notify.failure(error.message));
     }
   });
 }

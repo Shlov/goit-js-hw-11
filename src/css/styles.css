@@ -50,7 +50,7 @@ body {
   box-shadow:  18px 18px 39px #b5b5b5, -18px -18px 39px #ffffff;
 }
 
-.photo-card > img {
+.photo-card > a > img {
   border-radius: 18px;
 }
 

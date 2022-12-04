@@ -1,5 +1,6 @@
 import './css/styles.css';
-
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import {fetchImag} from './js/fetchSearch'
 
@@ -21,12 +22,14 @@ let page = 1;
 let what = '';
 const  resultsPerPage = 40;
 
+const lightbox = new SimpleLightbox('.gallery a', {overlayOpacity: 0.75, captionsData: 'alt', captionDelay: 250});
+
 function searchImg(event) {
   event.preventDefault();
   what = event.target.searchQuery.value;
   galleryEl.innerHTML = '';
   page = 1;
-  fetchImag(what, page ,resultsPerPage).then(r => addMarkup(r)).catch(error => Notify.failure(error.message));
+  fetchMarkup()
 }
 
 function loadMore(entries, observer) {
@@ -34,25 +37,16 @@ function loadMore(entries, observer) {
     console.log(entry.isIntersecting)
     if (entry.isIntersecting) {
       page +=1;
-      fetchImag(what, page, resultsPerPage).then(r => addMarkup(r)).catch(error => Notify.failure(error.message));
+      fetchMarkup()
     }
   });
 }
 
-// function fetchImag(what, pageGallery) {
-//   const URL = 'https://pixabay.com/api';
-//   return axios.get(URL, {
-//     params: {
-//       q: what,
-//       key: '31737650-012dbd0b1d73fc9a5bf6ca0f4',
-//       type: 'photo',
-//       orientation: 'horizontal',
-//       safesearch: 'true',
-//       per_page: resultsPerPage,
-//       page: pageGallery,
-//     }
-//   }).then(r => addMarkup(r));
-// }
+function fetchMarkup() {
+  fetchImag(what, page, resultsPerPage)
+  .then(r => {addMarkup(r); lightbox.refresh()})
+  .catch(error => Notify.failure(error.message));
+}
 
 function addMarkup(data) {
   console.log(data)
@@ -71,7 +65,7 @@ function createGalleryMarkup(data) {
   console.dir(data.data.hits)
   return data.data.hits.map( card => 
     `<div class="photo-card">
-    <img src="${card.largeImageURL}" alt="${card.tags}" loading="lazy" width="260" height="195"/>
+    <a href="${card.largeImageURL}"><img src="${card.webformatURL}" alt="${card.tags}" loading="lazy" width="260" height="195"/></a>
       <div class="info">
         <p class="info-item">
           <b>Likes:</b>${card.likes}

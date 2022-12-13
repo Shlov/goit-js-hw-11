@@ -20,6 +20,7 @@ searchEl.addEventListener('submit', searchImg);
 
 let page = 1;
 let what = '';
+let totalHits = '';
 const  resultsPerPage = 40;
 
 const lightbox = new SimpleLightbox('.gallery a', {overlayOpacity: 0.75, captionsData: 'alt', captionDelay: 250});
@@ -29,7 +30,9 @@ function searchImg(event) {
   what = event.target.searchQuery.value;
   galleryEl.innerHTML = '';
   page = 1;
+  totalHits = '';
   fetchMarkup()
+  // Notify.info(`"Hooray! We found ${totalHits} images."`);
 }
 
 function loadMore(entries, observer) {
@@ -51,11 +54,11 @@ function fetchMarkup() {
 function addMarkup(data) {
   console.log(data)
   if (!data.data.hits.length) {
-    return Notify.info('Sorry, there are no images matching your search query. Please try again.')
+    return Notify.warning('Sorry, there are no images matching your search query. Please try again.')
   } else if (Math.ceil(data.data.totalHits/resultsPerPage)===page) {
     galleryEl.insertAdjacentHTML('beforeend', createGalleryMarkup(data));
     observer.unobserve(guardEl);
-    return Notify.info("We're sorry, but you've reached the end of search results.");
+    return Notify.warning("We're sorry, but you've reached the end of search results.");
   }
     galleryEl.insertAdjacentHTML('beforeend', createGalleryMarkup(data));
   observer.observe(guardEl);
